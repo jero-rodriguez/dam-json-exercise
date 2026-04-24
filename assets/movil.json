@@ -1,0 +1,7 @@
+{
+    "marca": "Google",
+    "modelo": "Pixel 8",
+    "precio": 799,
+    "especificaciones": ["Pantalla 6.2 pulgadas", "Cámara 50MP", "Batería 4575mAh"],
+    "enStock": true
+}

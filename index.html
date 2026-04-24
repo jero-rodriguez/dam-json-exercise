@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Producto - DAM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Información del Dispositivo</h1>
+
+        <div class="campo">
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" readonly>
+        </div>
+
+        <div class="campo">
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" readonly>
+        </div>
+
+        <div class="campo">
+            <label for="precio">Precio (€):</label>
+            <input type="number" id="precio" readonly>
+        </div>
+
+        <div class="campo">
+            <label for="specs">Especificaciones:</label>
+            <input type="text" id="specs" readonly>
+        </div>
+
+        <div class="campo">
+            <label for="stock">Disponible en tienda:</label>
+            <input type="checkbox" id="stock" disabled>
+        </div>
+    </div>
+
+    <script>
+        fetch('assets/movil.json')
+            .then(response => response.json())
+            .then(movil => {
+                document.getElementById('marca').value = movil.marca;
+                document.getElementById('modelo').value = movil.modelo;
+                document.getElementById('precio').value = movil.precio;
+
+                if (movil.enStock) {
+                    document.getElementById('stock').checked = true;
+                } else {
+                    document.getElementById('stock').checked = false;
+                }
+
+                let campoSpecs = document.getElementById('specs');
+                for (let i = 0; i < movil.especificaciones.length; i++) {
+                    let item = movil.especificaciones[i];
+                    if (i === movil.especificaciones.length - 1) {
+                        campoSpecs.value += item;
+                    } else {
+                        campoSpecs.value += item + ", ";
+                    }
+                }
+            }).catch(error => console.error('Error al cargar el terminal:', error));
+    </script>
+</body>
+
+</html>
